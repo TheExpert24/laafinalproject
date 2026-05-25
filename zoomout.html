@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="https://fonts.cdnfonts.com/css/olde-english" rel="stylesheet">
+<title>LAA Final Project</title>
+
+<style>
+body{
+    margin:0;
+    overflow:hidden;
+    background:black;
+    font-family:'Olde English',sans-serif;
+}
+
+.hero{
+    height:100vh;
+    background-image:url("./images/brutusdeath.png");
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:cover;
+    background-attachment:fixed;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+    box-sizing:border-box;
+    position:relative;
+    transform:translateX(-100vw);
+    animation:slideRight 1s ease forwards;
+}
+
+.hero h1{
+    color:white;
+    font-size:2.7rem;
+    text-shadow:0 0 10px black;
+}
+
+.circle-button{
+    position:absolute;
+    bottom:35px;
+    left:50%;
+    transform:translateX(-50%);
+    color:white;
+    font-size:65px;
+    cursor:pointer;
+    transition:0.3s;
+    text-shadow:0 0 10px black;
+}
+
+.circle-button:hover{
+    transform:translateX(-50%) scale(1.12) rotate(25deg);
+    color:red;
+}
+
+.universe{
+    position:fixed;
+    inset:0;
+    background:black;
+    overflow:hidden;
+    opacity:0;
+    pointer-events:none;
+    transition:1.2s ease;
+}
+
+.universe.active{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.stars{
+    position:absolute;
+    inset:0;
+    background-image:
+    radial-gradient(white 1px,transparent 1px),
+    radial-gradient(white 1px,transparent 1px),
+    radial-gradient(white 2px,transparent 2px);
+    background-size:120px 120px,180px 180px,250px 250px;
+    background-position:0 0,40px 60px,130px 90px;
+    animation:drift 30s linear infinite,blink 4s ease-in-out infinite;
+    opacity:0.9;
+}
+
+.map{
+    position:absolute;
+    width:1800px;
+    height:1200px;
+    transform-origin:center center;
+    will-change:transform;
+    cursor:grab;
+}
+
+.page-box{
+    position:absolute;
+    width:240px;
+    height:150px;
+    border:2px solid white;
+    overflow:hidden;
+    cursor:pointer;
+    transition:0.4s;
+    box-shadow:0 0 20px rgba(255,255,255,0.2);
+}
+
+.page-box:hover{
+    transform:scale(1.08);
+    box-shadow:0 0 30px rgba(255,255,255,0.7);
+}
+
+.page-box img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:brightness(0.6);
+}
+
+.label{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:1.7rem;
+    text-shadow:0 0 10px black;
+    background:rgba(0,0,0,0.2);
+}
+
+.page1{top:180px;left:300px;}
+.page2{top:180px;left:800px;}
+.page3{top:500px;left:300px;}
+.page4{top:500px;left:800px;}
+.page5{top:820px;left:550px;}
+
+.instructions{
+    position:fixed;
+    top:20px;
+    left:20px;
+    color:white;
+    font-size:1.1rem;
+    z-index:20;
+    opacity:0.8;
+}
+
+@keyframes slideRight{
+    from{
+        transform:translateX(-100vw);
+        opacity:0;
+    }
+    to{
+        transform:translateX(0);
+        opacity:1;
+    }
+}
+
+@keyframes drift{
+    from{
+        transform:translateY(0);
+    }
+    to{
+        transform:translateY(120px);
+    }
+}
+
+@keyframes blink{
+    0%{opacity:0.75;}
+    50%{opacity:1;}
+    100%{opacity:0.75;}
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+
+<h1>
+Farewell,good Strato.[Brutus runs on his sword.]<br><br>
+Caesar,now be still.<br><br>
+I killed not thee with half so good a will."(5.5.55-58)
+</h1>
+
+<div class="circle-button" onclick="openUniverse()">↻</div>
+
+</section>
+
+<div class="universe" id="universe">
+
+<div class="stars"></div>
+
+<div class="instructions">
+Scroll to zoom<br>
+Drag to move around
+</div>
+
+<div class="map" id="map">
+
+<a href="index.html" class="page-box page1">
+<img src="./images/brutusdeath.png">
+<div class="label">Page 1</div>
+</a>
+
+<a href="brutus.html" class="page-box page2">
+<img src="./images/32112323312.png">
+<div class="label">Page 2</div>
+</a>
+
+<a href="nobleness.html" class="page-box page3">
+<img src="./images/edited-image (9).png">
+<div class="label">Page 3</div>
+</a>
+
+<a href="thefinalcountdown.html" class="page-box page4">
+<img src="./images/caesarghost.png">
+<div class="label">Page 4</div>
+</a>
+
+<a href="zoomout.html" class="page-box page5">
+<img src="./images/brutusdeath.png">
+<div class="label">Page 5</div>
+</a>
+
+</div>
+</div>
+
+<script>
+const universe=document.getElementById('universe');
+const map=document.getElementById('map');
+
+let scale=1;
+let isDragging=false;
+let startX=0;
+let startY=0;
+let currentX=0;
+let currentY=0;
+
+function openUniverse(){
+    universe.classList.add('active');
+}
+
+window.addEventListener('wheel',(e)=>{
+    if(!universe.classList.contains('active')) return;
+
+    e.preventDefault();
+
+    if(e.deltaY<0){
+        scale+=0.08;
+    }else{
+        scale-=0.08;
+    }
+
+    scale=Math.max(0.5,Math.min(scale,2.5));
+
+    updateTransform();
+},{passive:false});
+
+map.addEventListener('mousedown',(e)=>{
+    isDragging=true;
+    startX=e.clientX-currentX;
+    startY=e.clientY-currentY;
+    map.style.cursor='grabbing';
+});
+
+window.addEventListener('mousemove',(e)=>{
+    if(!isDragging) return;
+
+    currentX=e.clientX-startX;
+    currentY=e.clientY-startY;
+
+    requestAnimationFrame(updateTransform);
+});
+
+window.addEventListener('mouseup',()=>{
+    isDragging=false;
+    map.style.cursor='grab';
+});
+
+function updateTransform(){
+    map.style.transform=`translate3d(${currentX}px,${currentY}px,0) scale(${scale})`;
+}
+</script>
+
+</body>
+</html>

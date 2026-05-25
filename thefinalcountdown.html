@@ -10,27 +10,20 @@
 body{
     margin:0;
     overflow:hidden;
-
     min-height:100vh;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
     text-align:center;
-
     padding:40px;
     box-sizing:border-box;
-
-    background-image:url("./images/edited-image (9).png");
+    background-image:url("./images/caesarghost.png");
     background-repeat:no-repeat;
     background-position:center 20%;
     background-size:cover;
-
     position:relative;
-
-    transform:translateX(100vw);
-    animation:slideIn 1s ease forwards;
+    transform:translateY(-100vh);
+    animation:slideDown 1s ease forwards;
 }
 
 .info-text{
@@ -56,28 +49,28 @@ body{
     color:red;
 }
 
-.slide-up{
-    animation:slideUp 1s ease forwards;
+.slide-left{
+    animation:slideLeft 1s ease forwards;
 }
 
-@keyframes slideIn{
+@keyframes slideDown{
     from{
-        transform:translateX(100vw);
+        transform:translateY(-100vh);
         opacity:0;
     }
     to{
-        transform:translateX(0);
+        transform:translateY(0);
         opacity:1;
     }
 }
 
-@keyframes slideUp{
+@keyframes slideLeft{
     from{
-        transform:translateY(0);
+        transform:translateX(0);
         opacity:1;
     }
     to{
-        transform:translateY(-100vh);
+        transform:translateX(-100vw);
         opacity:0;
     }
 }
@@ -87,22 +80,19 @@ body{
 <body>
 
 <div class="info-text">
-"This was the noblest Roman of them all.<br>
-All the conspirators save only he<br>
-Did that they did in envy of great Caesar.<br>
-He only in a general honest thought<br>
-And common good to all made one of them.<br>
-His life was gentle and the elements<br>
-So mixed in him that nature might stand up<br>
-And say to all the world 'This was a man.'" (5.5.74-81)
+"Ghost: Thy evil spirit, Brutus.<br>
+Brutus: Why com’st thou?<br>
+Ghost: To tell thee thou shalt see me at Philippi.<br>
+Brutus: Well, then I shall see thee again?<br>
+Ghost: Ay, at Philippi." (5.5.324-330)
 </div>
 
-<div class="arrow" onclick="goNext()">↑</div>
+<div class="arrow" onclick="goNext()">←</div>
 
 <script>
 function goNext(){
-document.body.classList.add("slide-up");
-setTimeout(()=>{window.location.href="thefinalcountdown.html";},900);
+document.body.classList.add("slide-left");
+setTimeout(()=>{window.location.href="zoomout.html";},900);
 }
 </script>
 
